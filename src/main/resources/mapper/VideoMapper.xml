@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxb.mediasystem.mapper.VideoMapper">
+    <insert id="addVideo" parameterType="com.xxb.mediasystem.model.Video" >
+        insert into video(id,path,url,fileName,uploadTime,author,title,description,picture,type,collectionId,sortId)
+        values(#{id},#{path},#{url},#{fileName},#{uploadTime},#{author},#{title},#{description},#{picture},#{type},#{collectionId},#{sortId})
+    </insert>
+    <select id="getAllVideo" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where isdelete = 0 and collectionId = 0
+    </select>
+
+    <update id="editVideoInfo" parameterType="com.xxb.mediasystem.model.Video">
+        update video
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title!=null and title!=''">title = #{title},</if>
+            <if test="description!=null and description!=''">description = #{description},</if>
+            <if test="picture!=null and picture!=''">picture = #{picture},</if>
+            <if test="type!=null and type!=''">type = #{type},</if>
+            <if test="publish!=null and publish!=''">publish =#{publish},</if>
+            <if test="tag!=null and tag!=''">tag =#{tag},</if>
+            <if test="views!=null and views!=''">views =#{views},</if>
+            <if test="sortId!=null and sortId!=''">sortId = #{sortId}</if>
+        </trim>
+        where id=#{id} and isdelete = 0
+    </update>
+
+    <delete id="deleteVideo">
+        delete from video where id = #{videoId}
+    </delete>
+    <update id="deleteVideoLoji">
+        update video set isdelete = 1 where id = #{videoId}
+    </update>
+    <select id="getPicture" resultType="java.lang.String">
+        select picture from video where id = #{videoId}
+    </select>
+    <select id="getVideoById" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where id = #{videoId}
+    </select>
+
+    <select id="getVideoByTitle" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where title LIKE CONCAT('%', #{title},'%') and isdelete = 0 and collectionId = 0
+    </select>
+
+    <select id="getVideoByType" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where type=#{typeId} and isdelete  = 0 and collectionId = 0
+    </select>
+
+    <select id="getPersonalVideo" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where author = #{userId} and isdelete = 0 and collectionId = 0
+    </select>
+
+    <select id="getPesonalVideoByTitle" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where  title LIKE CONCAT('%', #{title},'%') and author = #{userId} and isdelete = 0 and collectionId = 0
+    </select>
+
+    <select id="getPublishedVideo" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where publish = 2 and isdelete = 0 and collectionId = 0
+        <if test="title!=null and title!=''">and title Like CONCAT('%',#{title},'%')</if>
+        <if test="tag!= null and tag != ''"> and tag=#{tag}</if>
+    </select>
+
+
+    <select id="getVideoByCollectionId" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where isdelete  = 0 and collectionId  = #{collectionId} and publish = 2
+        order by sortId
+    </select>
+    <select id="getAllVideoByCollectionId" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where isdelete  = 0 and collectionId  = #{collectionId}
+        order by sortId
+    </select>
+    
+    <select id="getAuditVideo" resultType="com.xxb.mediasystem.model.Video">
+        select * from video where isdelete = 0 and collectionId = 0 and publish = 1
+    </select>
+
+    <update id="setSort">
+        update video set sortId=#{sortId} where id = #{videoId}
+    </update>
+
+</mapper>

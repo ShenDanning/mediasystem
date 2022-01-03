@@ -1,0 +1,38 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /v1
+
+
+spring:
+  datasource:
+    username: root
+    password: Xxbmedia123@
+    url: jdbc:mysql://10.10.22.106:3306/video?serverTimezone=GMT
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  session:
+    jdbc:
+      initialize-schema: embedded
+      schema: classpath:org/springframework/session/jdbc/schema-mysql.sql
+      table-name: SPRING_SESSION
+    timeout: 1
+    store-type: jdbc
+logging:
+  level:
+    root: info
+    com.lrm: debug
+  file:
+    name: log/blog.log
+file:
+  upload:
+    abpath: /opt/video/
+    urlpath: /video/**
+    mdImageDir: /video/assets
+    mdVideoDir: /video
+    serverUrl: http://v.shu.edu.cn
+
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+

@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxb.mediasystem.mapper.UserMapper">
+    <insert id="addUser" keyColumn="id" parameterType="com.xxb.mediasystem.model.User">
+      insert into user(id,name,token,type)
+      values (#{id},#{name},#{token},type)
+    </insert>
+
+    <select id="selectByPrimaryKey" resultType="com.xxb.mediasystem.model.User">
+        select * from user where id = #{userid}
+    </select>
+    <update id="editUser" parameterType="com.xxb.mediasystem.model.User">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="token!=null and token!=''">token = #{token},</if>
+            <if test="type!=null and type!=''">type= #{type}</if>
+        </trim>
+        where id=#{id}
+    </update>
+    <select id="findUserByToken" resultType="com.xxb.mediasystem.model.User">
+        select * from user where token = #{token}
+    </select>
+    <select id="getAllUsers" resultType="com.xxb.mediasystem.model.User">
+        select * from user
+    </select>
+    <select id="getUsersByType" resultType="com.xxb.mediasystem.model.User">
+        select * from user where type = #{type}
+    </select>
+
+</mapper>

@@ -1,0 +1,33 @@
+# 此时配置为开发环境
+spring:
+  profiles:
+    active: prod
+  main:
+    allow-circular-references: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2000MB
+      max-request-size: 2000MB
+current:
+  limiting:
+    #开启全局限流
+    enabled: false
+    #开启注解限流,可使注解失效
+    part-enabled: true
+    #每秒并发量 这里的qps是全局限流开启的时候的值,如果使用注解在注解里设置QPS值
+    qps: 400
+    #开启快速失败,可切换为阻塞
+    fail-fast: true
+    #系统启动保护时间为0
+    initial-delay: 1
+
+fdfs:
+  connect-timeout: 1601
+  so-timeout: 1501
+  tracker-list: 10.10.22.106:22122
+
+
+sso:
+  clientId: Tp8uecHJi00aHlpufk8Fqp2A_2zpaKzS
+  secret: f1Pm1ekcxfDWd3T6r7dluV-mfEi_Hh7f

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxb.mediasystem.mapper.TypeMapper">
+
+    <select id="getTypeList" resultType="com.xxb.mediasystem.model.Type">
+        select * from type where author = #{userId}
+    </select>
+    <select id="getTypeById" resultType="java.lang.String">
+        select type from type where id = #{typeId}
+    </select>
+    <insert id="addType" keyColumn="id" parameterType="com.xxb.mediasystem.model.Type">
+        insert into type (type,author)
+        values (#{type},#{author})
+    </insert>
+    <update id="editType">
+        update type set type = #{type} where id = #{id}
+    </update>
+
+    <delete id="deleteType">
+        delete from type where id = #{id}
+    </delete>
+
+</mapper>
